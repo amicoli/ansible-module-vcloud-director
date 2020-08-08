@@ -1,0 +1,21 @@
+# Copyright © 2018 VMware, Inc. All Rights Reserved.
+# SPDX-License-Identifier: BSD-2-Clause OR GPL-3.0-only
+---
+- name: vCloudDirectorAnsible
+  hosts: localhost
+  environment:
+    env_user: terraformadmin
+    env_password: klj3lkj4lkf22ZX
+    env_host: csa-sandbox.eng.vmware.com
+    env_org: Terraform
+    env_api_version: 30.0
+    env_verify_ssl_certs: false
+  roles:
+      - catalogs
+      - user
+      - vapp
+      - vappvm
+      - vdc
+      - disk
+      - org
+      - catalog_item

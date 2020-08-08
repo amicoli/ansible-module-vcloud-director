@@ -3,19 +3,39 @@
 ---
 - name: vCloudDirectorAnsible
   hosts: localhost
+  connection: local
   environment:
-    env_user: terraformadmin
-    env_password: klj3lkj4lkf22ZX
-    env_host: csa-sandbox.eng.vmware.com
-    env_org: Terraform
+    env_user: 9325.365.6f3d96
+    env_password: <password>
+    env_host: api.vcd.portal.skyscapecloud.com
+    env_org: 235-365-1-01f7de
     env_api_version: 30.0
     env_verify_ssl_certs: false
-  roles:
-      - catalogs
-      - user
-      - vapp
-      - vappvm
-      - vdc
-      - disk
-      - org
-      - catalog_item
+  vars:
+    target_vdc: "GEL BioInformatics (IL2-TESTDEV-BASIC)"
+    # target_vapp: bio-test-cva
+    # target_vm_name:
+    #   - bio-test-cva-dit-01
+
+  tasks:
+    - name: list vapp vm nics
+      vcd_vapp_vm:
+        target_vm_name: "bio-test-cva-dit-01"
+        target_vapp: "bio-test-cva"
+        target_vdc: "{{target_vdc}}"
+        operation: "list_nics"
+      register: output
+      # command: date
+    - name: list vapp vm nics output
+      debug:
+        msg: "{{ output }}"
+    - name: list vapp vm disks
+      vcd_vapp_vm:
+        target_vm_name: "bio-test-cva-dit-01"
+        target_vapp: "bio-test-cva"
+        target_vdc: "{{target_vdc}}"
+        operation: "list_disks"
+      register: output
+    - name: list vapp vm disks output
+      debug:
+        msg: "{{ output }}"
