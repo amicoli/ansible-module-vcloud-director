@@ -1,0 +1,39 @@
+---
+- name: vCloudDirectorAnsible
+  hosts: localhost
+  connection: local
+  environment:
+    env_user: 9325.365.6f3d96
+    env_password: 39Maxr86Alex1980!
+    env_host: api.vcd.pod00003.sys00004.portal.skyscapecloud.com
+    env_org: 235-365-6-b4af9c
+    env_api_version: 30.0
+    env_verify_ssl_certs: false
+  vars:
+    # target_vdc: "GEL BioInformatics (IL2-TESTDEV-BASIC)"
+    # target_vdc: "GEL Central Services (IL2-TESTDEV-BASIC)"
+    target_vdc: "PV2-02 IL2-HPC-BASIC"
+    target_vapp: owncloud
+    # target_vm_name:
+    #    - bio-test-cva-dit-01
+    tasks:
+      - name: power off vapp vm
+        vcd_vapp_vm:
+          target_vm_name: "cs-dev-core-owncloud-01"
+          target_vapp: "owncloud"
+          target_vdc: "{{ target_vdc }}"
+          operation: "poweroff"
+        register: output
+      - name: list power off vapp vm output
+        debug:
+          msg: "{{ output }}"
+      - name: power on vapp vm
+        vcd_vapp_vm:
+          target_vm_name: "cs-dev-core-owncloud-01"
+          target_vapp: "owncloud"
+          target_vdc: "{{ target_vdc }}"
+          operation: "poweron"
+        register: output
+      - name: list power on vapp vm output
+        debug:
+          msg: "{{ output }}"

@@ -1,0 +1,41 @@
+---
+
+- name: vCloudDirectorAnsible
+  hosts: localhost
+  connection: local
+  vars:
+    target_vdc: "GEL BioInformatics (IL2-TESTDEV-BASIC)"
+    vcd_vapp:
+      - target_vapp: bio-prod-clinicaldataintake
+        target_vm_name:
+          - "bio-prod-clinicaldataintake-web-01"
+      - target_vapp: bio-prod-cipapi
+        target_vm_name:
+          - "bio-prod-cipapi-postgres-02"
+          - "bio-prod-cipapi-postgres-01"
+          - "bio-prod-cipapi-nginx-06"
+          - "bio-prod-cipapi-nginx-05"
+          - "bio-prod-cipapi-nginx-04"
+          - "bio-prod-cipapi-nginx-03"
+          - "bio-prod-cipapi-nginx-02"
+          - "bio-prod-cipapi-nginx-01"
+          - "bio-prod-cipapi-login-01"
+          - "bio-prod-cipapi-haproxy-02"
+          - "bio-prod-cipapi-haproxy-01"
+  environment:
+    env_user: 12177.365.df5a67
+    env_password: N00-gat6s
+    env_host: api.vcd.portal.skyscapecloud.com
+    env_org: 235-365-1-01f7de
+   # env_api_version: PYVCLOUD_API_VERSION
+    env_verify_ssl_certs: false
+
+  tasks:
+
+    - name: get list of vms
+      vcd_vapp:
+        vapp_name: "{{ item.target_vapp }}"
+        vdc: "{{ target_vdc }}"
+        operation: "list_vms"
+        verify_ssl_certs: false
+      loop: "{{ vcd_vapp }}"

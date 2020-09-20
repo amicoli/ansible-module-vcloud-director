@@ -6,7 +6,7 @@
   connection: local
   environment:
     env_user: 9325.365.6f3d96
-    env_password: <password>
+    env_password: 39Maxr86Alex1980!
     env_host: api.vcd.portal.skyscapecloud.com
     env_org: 235-365-1-01f7de
     env_api_version: 30.0
